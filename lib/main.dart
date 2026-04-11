@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:threads_clone/data/datasources/local_post_data_source.dart';
 import 'package:threads_clone/data/models/post_model.dart';
 import 'package:threads_clone/data/repositories/post_repository_impl.dart';
@@ -10,6 +12,13 @@ import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: '.env');
+
+  await Supabase.initialize(
+    url: dotenv.env['API_URL'] ?? '',
+    anonKey: dotenv.env['API_KEY'] ?? '',
+  );
 
   await Hive.initFlutter();
   Hive.registerAdapter(PostModelAdapter());

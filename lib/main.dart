@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:threads_clone/data/datasources/local_post_data_source.dart';
 import 'package:threads_clone/data/models/comment_model.dart';
 import 'package:threads_clone/data/models/post_model.dart';
-import 'package:threads_clone/data/repositories/post_repository_impl.dart';
 import 'package:threads_clone/domain/entities/post.dart';
 import 'package:threads_clone/domain/repositories/auth_repository.dart';
 import 'package:threads_clone/domain/repositories/post_repository.dart';
 import 'package:threads_clone/locator.dart';
 import 'package:threads_clone/presentation/bloc/auth/auth_cubit.dart';
 import 'package:threads_clone/presentation/bloc/feed_cubit.dart';
-import 'package:threads_clone/presentation/screens/feed_screen.dart';
+import 'package:threads_clone/presentation/widgets/auth_wrapper.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 
 Future<void> main() async {
@@ -76,13 +74,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => AuthCubit(locator<AuthRepository>())),
+        BlocProvider(create: (_) => AuthCubit(locator<AuthRepository>())..checkAuth()),
         BlocProvider(create: (_) => FeedCubit(locator<PostRepository>())),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-        home: const FeedScreen(),
+        home: const AuthWrapper(),
       ),
     );
   }

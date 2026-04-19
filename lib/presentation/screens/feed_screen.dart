@@ -42,12 +42,16 @@ class _FeedScreenState extends State<FeedScreen> {
                     create: (_) => CreatePostCubit(
                       locator<PostRepository>(),
                       locator<ImagePicker>(),
-                      locator<AuthRepository>()
+                      locator<AuthRepository>(),
                     ),
                     child: CreatePostScreen(),
                   ),
                 ),
-              );
+              ).then((_) {
+                if (context.mounted) {
+                  context.read<FeedCubit>().loadFeed();
+                }
+              });
             },
             icon: Icon(Icons.edit_outlined),
           ),

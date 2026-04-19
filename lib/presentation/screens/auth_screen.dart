@@ -28,7 +28,7 @@ class _AuthScreenState extends State<AuthScreen> {
     if (_isLogin) {
       context.read<AuthCubit>().signIn(email, password);
     } else {
-      context.read<AuthCubit>().signUp('test123456@gmail.com', '12345678');
+      context.read<AuthCubit>().signUp(email, password);
     }
   }
 

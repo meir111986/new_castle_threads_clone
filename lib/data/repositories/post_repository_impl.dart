@@ -12,7 +12,13 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<void> createPost(Post post) async {
-    final model = PostModel.fromEntity(post);
+    String? finalIamgeUrl;
+
+    if (post.imageUrl != null && post.imageUrl!.startsWith('/')) {
+      finalIamgeUrl = await _remote.uploadImage(post.imageUrl!);
+    }
+
+    final model = PostModel.fromEntity(post.copyWith(imageUrl: finalIamgeUrl));
     await _remote.createPost(model);
     await _local.savePost(model);
   }

@@ -16,6 +16,7 @@ class PostCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
             onTap: () {
@@ -31,19 +32,27 @@ class PostCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  () {
-                    final currentUser = context.read<AuthCubit>().state.user;
-                    if (currentUser != null && post.authorId == currentUser.id) {
-                      return currentUser.username;
-                    }
-                    return post.authorId ?? 'null';
-                  }(),
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                Text(() {
+                  final currentUser = context.read<AuthCubit>().state.user;
+                  if (currentUser != null && post.authorId == currentUser.id) {
+                    return currentUser.username;
+                  }
+                  return post.authorId ?? 'null';
+                }(), style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 6),
                 Text(post.content ?? '', style: TextStyle(fontSize: 15)),
                 const SizedBox(height: 10),
+
+                if (post.imageUrl != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Image.network(
+                      post.imageUrl!,
+                      width: double.infinity,
+                      height: 300,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
 
                 Row(
                   children: [

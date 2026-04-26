@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:threads_clone/notifications_service.dart';
 import 'package:threads_clone/presentation/bloc/auth/auth_cubit.dart';
 import 'package:threads_clone/presentation/bloc/auth/auth_state.dart';
 import 'package:threads_clone/presentation/screens/auth_screen.dart';
@@ -13,10 +14,17 @@ class AuthWrapper extends StatelessWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         if (state.status == AuthStatus.initial) {
-          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
 
-        if (state.status == AuthStatus.authenticated) return const FeedScreen();
+        if (state.status == AuthStatus.authenticated) {
+          NotificationsService.instance.initialize(context);
+
+          return const FeedScreen();
+        }
+        // if (state.status == AuthStatus.authenticated) return const FeedScreen();
 
         return const AuthScreen();
       },

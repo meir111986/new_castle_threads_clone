@@ -3,6 +3,7 @@ import 'package:threads_clone/data/datasources/remote_comment_data_source.dart';
 import 'package:threads_clone/data/models/comment_model.dart';
 import 'package:threads_clone/domain/entities/comment.dart';
 import 'package:threads_clone/domain/repositories/comment_repository.dart';
+import 'package:flutter/material.dart';
 
 class CommentRepositoryImpl implements CommentRepository {
   final LocalCommentDataSource _local;
@@ -29,7 +30,8 @@ class CommentRepositoryImpl implements CommentRepository {
       }
       return remoteComments.map((model) => model.toEntity()).toList();
     } catch (e, s) {
-      print('object $s');
+      debugPrint('object $s');
+
       final models = await _local.getCommentsByPost(postId);
 
       return models.map((model) => model.toEntity()).toList();

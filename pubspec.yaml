@@ -22,6 +22,7 @@ dependencies:
   get_it: ^9.2.1
   firebase_core: ^4.7.0
   firebase_messaging: ^16.2.0
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +39,7 @@ flutter:
 
   assets:
     - .env
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -64,3 +66,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/logo.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true

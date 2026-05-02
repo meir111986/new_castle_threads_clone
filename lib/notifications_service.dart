@@ -22,7 +22,7 @@ class NotificationsService {
     }
 
     final token = await _messaging.getToken();
-    print('FCM TOKEN: $token');
+    debugPrint('FCM TOKEN: $token');
 
     /// foregraound
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -31,7 +31,7 @@ class NotificationsService {
 
     // background, terminated
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('OPENED FROM BG: ${message.notification?.title}');
+      debugPrint('OPENED FROM BG: ${message.notification?.title}');
 
       ///  навигация
     });
@@ -39,7 +39,7 @@ class NotificationsService {
     /// not clicked
     final initialMessage = await _messaging.getInitialMessage();
     if (initialMessage != null) {
-      print('OPENED FROM START');
+      debugPrint('OPENED FROM START');
     }
   }
 

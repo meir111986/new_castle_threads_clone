@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:threads_clone/domain/entities/post.dart';
@@ -18,19 +19,18 @@ class CreatePostCubit extends Cubit<CreatePostState> {
   }
 
   Future<void> pickFromGallery() async {
-    print('method called');
+    debugPrint('method called');
     final file = await _picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 80,
     );
 
-    print('object');
-    print(file);
+    debugPrint('object');
 
     if (file == null) return;
 
-    print('got galley');
-    print(file.path);
+    debugPrint('got galley');
+    debugPrint(file.path);
 
     emit(state.copyWith(imageUrl: file.path));
   }

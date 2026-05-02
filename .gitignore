@@ -49,3 +49,4 @@ app.*.map.json
 *.freezed.dart
 
 .env
+android/key.properties
